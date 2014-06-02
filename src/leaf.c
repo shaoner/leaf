@@ -148,7 +148,7 @@ static leaf_error_t leaf_run()
 		print_event(etype);
 
 		/* Execute specific event handler */
-		if (geventhandlers[etype])
+		if (etype < MAX_EVENTS && geventhandlers[etype])
 			if (geventhandlers[etype](event) != EVENT_ERR_NONE)
 				status = ERR_EVENT;
 		free(event);

@@ -30,7 +30,9 @@ typedef enum {
 
 typedef event_error_t (*event_handler_t)(xcb_generic_event_t*);
 
-extern event_handler_t geventhandlers[];
+#define MAX_EVENTS XCB_MAPPING_NOTIFY + 1
+extern event_handler_t geventhandlers[MAX_EVENTS];
+
 
 # ifndef NDEBUG
 void event_print(int type);

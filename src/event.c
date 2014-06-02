@@ -54,7 +54,7 @@ static event_error_t event_configure_request(xcb_generic_event_t *ge)
 	return EVENT_ERR_NONE;
 }
 
-event_handler_t geventhandlers[] = {
+event_handler_t geventhandlers[MAX_EVENTS] = {
 	NULL,
 	NULL,
 	NULL, /* XCB_KEY_PRESS         */
@@ -93,7 +93,7 @@ event_handler_t geventhandlers[] = {
 };
 
 #ifndef NDEBUG
-static const char *eventnames[] = {
+static const char *eventnames[MAX_EVENTS] = {
 	"",
 	"",
 	"KeyPress",
@@ -133,6 +133,7 @@ static const char *eventnames[] = {
 
 void event_print(int type)
 {
-	print_d("-> Event %i (%s)", type, eventnames[type]);
+	if (type < MAX_EVENTS)
+		print_d("-> Event %i (%s)", type, eventnames[type]);
 }
 #endif
