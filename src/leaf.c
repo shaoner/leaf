@@ -116,13 +116,13 @@ static leaf_error_t leaf_init()
 	status = xcb_request_check(gconf.conn, cookie);
 	xcb_flush(gconf.conn);
 
-    if (status)
-    {
-	    print_d("X is busy, another window manager may be running (%d)",
-	            status->error_code);
-	    free(status);
-	    return ERR_CONN;
-    }
+	if (status)
+	{
+		print_d("X is busy, another window manager may be running (%d)",
+		        status->error_code);
+		free(status);
+		return ERR_CONN;
+	}
 
 	return ERR_NONE;
 }
@@ -138,8 +138,8 @@ static leaf_error_t leaf_run()
 	do {
 		event = xcb_poll_for_event(gconf.conn);
 		if (!event) {
-            if (xcb_connection_has_error(gconf.conn))
-	            return ERR_CONN;
+			if (xcb_connection_has_error(gconf.conn))
+				return ERR_CONN;
 			continue;
 		}
 		etype = XCB_EVENT_RESPONSE_TYPE(event);
@@ -172,7 +172,7 @@ static int leaf_exit(int code)
 int main(int argc, char *argv[])
 {
 	struct option longopts[] = {
-		{ "version", no_argument, NULL,	'v' },
+		{ "version", no_argument, NULL, 'v' },
 		{ "help", no_argument, NULL, 'h' },
 		{ 0, 0, 0, 0 }
 	};
