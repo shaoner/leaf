@@ -42,19 +42,19 @@
  * Error status
  */
 typedef enum {
-	ERR_NONE,
-	ERR_CONN,
-	ERR_EVENT
+    ERR_NONE,
+    ERR_CONN,
+    ERR_EVENT
 } leaf_error_t;
 
 /*
  * Global configuration
  */
 struct glob_config_t {
-	xcb_connection_t *conn;
-	bool running;
-	const xcb_setup_t *xsetup;
-	xcb_screen_t *screen;
+    xcb_connection_t *conn;
+    bool running;
+    const xcb_setup_t *xsetup;
+    xcb_screen_t *screen;
 };
 
 extern struct glob_config_t gconf;

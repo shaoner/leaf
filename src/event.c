@@ -28,112 +28,112 @@
 
 static event_error_t event_create_notify(xcb_generic_event_t *ge)
 {
-	xcb_create_notify_event_t *e;
+    xcb_create_notify_event_t *e;
 
-	print_d("");
-	e = (xcb_create_notify_event_t*)ge;
-	window_configure(e->window);
-	return EVENT_ERR_NONE;
+    print_d("");
+    e = (xcb_create_notify_event_t*)ge;
+    window_configure(e->window);
+    return EVENT_ERR_NONE;
 }
 
 static event_error_t event_destroy_notify(xcb_generic_event_t *ge)
 {
-	print_d("");
-	return EVENT_ERR_NONE;
+    print_d("");
+    return EVENT_ERR_NONE;
 }
 
 static event_error_t event_map_request(xcb_generic_event_t *ge)
 {
-	print_d("");
-	return EVENT_ERR_NONE;
+    print_d("");
+    return EVENT_ERR_NONE;
 }
 
 static event_error_t event_configure_request(xcb_generic_event_t *ge)
 {
-	print_d("");
-	return EVENT_ERR_NONE;
+    print_d("");
+    return EVENT_ERR_NONE;
 }
 
 event_handler_t geventhandlers[MAX_EVENTS] = {
-	NULL,
-	NULL,
-	NULL, /* XCB_KEY_PRESS         */
-	NULL, /* XCB_KEY_RELEASE       */
-	NULL, /* XCB_BUTTON_PRESS      */
-	NULL, /* XCB_BUTTON_RELEASE    */
-	NULL, /* XCB_MOTION_NOTIFY     */
-	NULL, /* XCB_ENTER_NOTIFY      */
-	NULL, /* XCB_LEAVE_NOTIFY      */
-	NULL, /* XCB_FOCUS_IN          */
-	NULL, /* XCB_FOCUS_OUT         */
-	NULL, /* XCB_KEYMAP_NOTIFY     */
-	NULL, /* XCB_EXPOSE            */
-	NULL, /* XCB_GRAPHICS_EXPOSURE */
-	NULL, /* XCB_NO_EXPOSURE       */
-	NULL, /* XCB_VISIBILITY_NOTIFY */
-	event_create_notify,
-	event_destroy_notify,
-	NULL, /* XCB_UNMAP_NOTIFY      */
-	NULL, /* XCB_MAP_NOTIFY        */
-	event_map_request,
-	NULL, /* XCB_REPARENT_NOTIFY   */
-	NULL, /* XCB_CONFIGURE_NOTIFY  */
-	event_configure_request,
-	NULL, /* XCB_GRAVITY_NOTIFY    */
-	NULL, /* XCB_RESIZE_REQUEST    */
-	NULL, /* XCB_CIRCULATE_NOTIFY  */
-	NULL, /* XCB_CIRCULATE_REQUEST */
-	NULL, /* XCB_PROPERTY_NOTIFY   */
-	NULL, /* XCB_SELECTION_CLEAR   */
-	NULL, /* XCB_SELECTION_REQUEST */
-	NULL, /* XCB_SELECTION_NOTIFY  */
-	NULL, /* XCB_COLORMAP_NOTIFY   */
-	NULL, /* XCB_CLIENT_MESSAGE    */
-	NULL, /* XCB_MAPPING_NOTIFY    */
+    NULL,
+    NULL,
+    NULL, /* XCB_KEY_PRESS         */
+    NULL, /* XCB_KEY_RELEASE       */
+    NULL, /* XCB_BUTTON_PRESS      */
+    NULL, /* XCB_BUTTON_RELEASE    */
+    NULL, /* XCB_MOTION_NOTIFY     */
+    NULL, /* XCB_ENTER_NOTIFY      */
+    NULL, /* XCB_LEAVE_NOTIFY      */
+    NULL, /* XCB_FOCUS_IN          */
+    NULL, /* XCB_FOCUS_OUT         */
+    NULL, /* XCB_KEYMAP_NOTIFY     */
+    NULL, /* XCB_EXPOSE            */
+    NULL, /* XCB_GRAPHICS_EXPOSURE */
+    NULL, /* XCB_NO_EXPOSURE       */
+    NULL, /* XCB_VISIBILITY_NOTIFY */
+    event_create_notify,
+    event_destroy_notify,
+    NULL, /* XCB_UNMAP_NOTIFY      */
+    NULL, /* XCB_MAP_NOTIFY        */
+    event_map_request,
+    NULL, /* XCB_REPARENT_NOTIFY   */
+    NULL, /* XCB_CONFIGURE_NOTIFY  */
+    event_configure_request,
+    NULL, /* XCB_GRAVITY_NOTIFY    */
+    NULL, /* XCB_RESIZE_REQUEST    */
+    NULL, /* XCB_CIRCULATE_NOTIFY  */
+    NULL, /* XCB_CIRCULATE_REQUEST */
+    NULL, /* XCB_PROPERTY_NOTIFY   */
+    NULL, /* XCB_SELECTION_CLEAR   */
+    NULL, /* XCB_SELECTION_REQUEST */
+    NULL, /* XCB_SELECTION_NOTIFY  */
+    NULL, /* XCB_COLORMAP_NOTIFY   */
+    NULL, /* XCB_CLIENT_MESSAGE    */
+    NULL, /* XCB_MAPPING_NOTIFY    */
 };
 
 #ifndef NDEBUG
 static const char *eventnames[MAX_EVENTS] = {
-	"",
-	"",
-	"KeyPress",
-	"KeyRelease",
-	"ButtonPress",
-	"ButtonRelease",
-	"MotionNotify",
-	"EnterNotify",
-	"LeaveNotify",
-	"FocusIn",
-	"FocusOut",
-	"KeymapNotify",
-	"Expose",
-	"GraphicsExpose",
-	"NoExpose",
-	"VisibilityNotify",
-	"CreateNotify",
-	"DestroyNotify",
-	"UnmapNotify",
-	"MapNotify",
-	"MapRequest",
-	"ReparentNotify",
-	"ConfigureNotify",
-	"ConfigureRequest",
-	"GravityNotify",
-	"ResizeRequest",
-	"CirculateNotify",
-	"CirculateRequest",
-	"PropertyNotify",
-	"SelectionClear",
-	"SelectionRequest",
-	"SelectionNotify",
-	"ColormapNotify",
-	"ClientMessage",
-	"MappingNotify"
+    "",
+    "",
+    "KeyPress",
+    "KeyRelease",
+    "ButtonPress",
+    "ButtonRelease",
+    "MotionNotify",
+    "EnterNotify",
+    "LeaveNotify",
+    "FocusIn",
+    "FocusOut",
+    "KeymapNotify",
+    "Expose",
+    "GraphicsExpose",
+    "NoExpose",
+    "VisibilityNotify",
+    "CreateNotify",
+    "DestroyNotify",
+    "UnmapNotify",
+    "MapNotify",
+    "MapRequest",
+    "ReparentNotify",
+    "ConfigureNotify",
+    "ConfigureRequest",
+    "GravityNotify",
+    "ResizeRequest",
+    "CirculateNotify",
+    "CirculateRequest",
+    "PropertyNotify",
+    "SelectionClear",
+    "SelectionRequest",
+    "SelectionNotify",
+    "ColormapNotify",
+    "ClientMessage",
+    "MappingNotify"
 };
 
 void event_print(int type)
 {
-	if (type < MAX_EVENTS)
-		print_d("-> Event %i (%s)", type, eventnames[type]);
+    if (type < MAX_EVENTS)
+        print_d("-> Event %i (%s)", type, eventnames[type]);
 }
 #endif

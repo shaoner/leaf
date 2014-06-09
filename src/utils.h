@@ -36,15 +36,15 @@
 # ifdef NDEBUG
 #  define print_d(fmt, args...)
 # else
-#  define print_d(fmt, args...)	  \
-	fprintf(stderr, "[debug " __FILE__ ":" _stringify(__LINE__) " %s] " \
-	        fmt "\n", __FUNCTION__, ## args)
+#  define print_d(fmt, args...)                                         \
+    fprintf(stderr, "[debug " __FILE__ ":" _stringify(__LINE__) " %s] " \
+            fmt "\n", __FUNCTION__, ## args)
 # endif /* !NDEBUG */
 
-# define print_e(fmt, args...)	  \
-	fprintf(stderr, "[error] " fmt "\n", ## args)
+# define print_e(fmt, args...)                      \
+    fprintf(stderr, "[error] " fmt "\n", ## args)
 
-# define print_w(fmt, args...)	  \
-	fprintf(stderr, "[warn] " fmt "\n", ## args)
+# define print_w(fmt, args...)                      \
+    fprintf(stderr, "[warn] " fmt "\n", ## args)
 
 #endif /* !UTILS_H */
