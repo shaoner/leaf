@@ -27,20 +27,24 @@
 
 void window_configure(xcb_window_t win)
 {
+    uint32_t mask;
     uint32_t vals[1];
 
     print_d("Configure window %d", win);
 
     /* Border color */
+    mask = XCB_CW_BORDER_PIXEL;
     vals[0] = 0x666666;
-    xcb_change_window_attributes(gconf.conn, win, XCB_CW_BORDER_PIXEL, vals);
+    xcb_change_window_attributes(gconf.conn, win, mask, vals);
 
     /* Border width */
+    mask = XCB_CONFIG_WINDOW_BORDER_WIDTH;
     vals[0] = 1;
-    xcb_configure_window(gconf.conn, win, XCB_CONFIG_WINDOW_BORDER_WIDTH, vals);
+    xcb_configure_window(gconf.conn, win, mask, vals);
 
+    mask = XCB_CW_EVENT_MASK;
     vals[0] = XCB_EVENT_MASK_ENTER_WINDOW;
-    xcb_change_window_attributes_checked(gconf.conn, win, XCB_CW_EVENT_MASK, vals);
+    xcb_change_window_attributes_checked(gconf.conn, win, mask, vals);
 
     /* Show window on screen. */
     xcb_map_window(gconf.conn, win);
