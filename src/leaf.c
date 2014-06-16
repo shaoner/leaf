@@ -108,6 +108,7 @@ static leaf_error_t leaf_init()
     /* Configure the root screen to get window's events */
     values = \
         XCB_EVENT_MASK_STRUCTURE_NOTIFY |
+        XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT |
         XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY;
     cookie = xcb_change_window_attributes_checked(gconf.conn,
                                                   gconf.screen->root,
