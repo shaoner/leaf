@@ -32,15 +32,24 @@
 # define __stringify(s) #s
 # define _stringify(s) __stringify(s)
 
-/* General print */
+/* Debug macros */
 # ifdef NDEBUG
+
 #  define print_d(fmt, args...)
+#  define d_assert(c)
+
 # else
+
+#  include <assert.h>
+
 #  define print_d(fmt, args...)                                         \
     fprintf(stderr, "[debug " __FILE__ ":" _stringify(__LINE__) " %s] " \
             fmt "\n", __FUNCTION__, ## args)
+#  define d_assert(c) assert(c)
+
 # endif /* !NDEBUG */
 
+/* General printing macros */
 # define print_e(fmt, args...)                      \
     fprintf(stderr, "[error] " fmt "\n", ## args)
 
