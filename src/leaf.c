@@ -140,8 +140,10 @@ static leaf_error_t leaf_run()
     do {
         event = xcb_poll_for_event(gconf.conn);
         if (!event) {
-            if (xcb_connection_has_error(gconf.conn))
+            if (xcb_connection_has_error(gconf.conn)) {
+                print_e("X connection is lost, exiting");
                 return ERR_CONN;
+            }
             continue;
         }
         etype = XCB_EVENT_RESPONSE_TYPE(event);
