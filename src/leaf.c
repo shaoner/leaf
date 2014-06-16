@@ -34,7 +34,12 @@
 #include <xcb/xcb.h>
 #include <xcb/xcb_event.h>
 
-struct glob_config_t gconf;
+struct glob_config_t gconf = {
+    .conn = NULL,
+    .running = false,
+    .xsetup = NULL,
+    .screen = NULL
+};
 
 /*
  * Forward decl.
