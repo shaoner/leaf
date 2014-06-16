@@ -26,35 +26,35 @@
 
 #include <xcb/xcb.h>
 
-static event_error_t event_create_notify(xcb_generic_event_t *ge)
+static leaf_error_t event_create_notify(xcb_generic_event_t *ge)
 {
 #ifndef NDEBUG
     xcb_create_notify_event_t *e = (xcb_create_notify_event_t *)ge;
     print_d("New window 0x%08X (%i, %i) [%u, %u]",
             e->window, e->x, e->y, e->width, e->height);
 #endif
-    return EVENT_ERR_NONE;
+    return ERR_NONE;
 }
 
-static event_error_t event_destroy_notify(xcb_generic_event_t *ge)
+static leaf_error_t event_destroy_notify(xcb_generic_event_t *ge)
 {
     print_d("");
-    return EVENT_ERR_NONE;
+    return ERR_NONE;
 }
 
-static event_error_t event_map_request(xcb_generic_event_t *ge)
+static leaf_error_t event_map_request(xcb_generic_event_t *ge)
 {
     xcb_map_request_event_t *e = (xcb_map_request_event_t *)ge;
 
     print_d("");
     window_configure(e->window);
-    return EVENT_ERR_NONE;
+    return ERR_NONE;
 }
 
-static event_error_t event_configure_request(xcb_generic_event_t *ge)
+static leaf_error_t event_configure_request(xcb_generic_event_t *ge)
 {
     print_d("");
-    return EVENT_ERR_NONE;
+    return ERR_NONE;
 }
 
 event_handler_t geventhandlers[MAX_EVENTS] = {

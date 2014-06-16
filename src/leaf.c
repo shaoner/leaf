@@ -19,9 +19,10 @@
  *
  */
 
+#include "leaf.h"
 #include "window.h"
 #include "event.h"
-#include "leaf.h"
+#include "error.h"
 
 #include <getopt.h>
 #include <stdlib.h>
@@ -150,8 +151,7 @@ static leaf_error_t leaf_run()
 
         /* Execute specific event handler */
         if (etype < MAX_EVENTS && geventhandlers[etype])
-            if (geventhandlers[etype](event) != EVENT_ERR_NONE)
-                status = ERR_EVENT;
+            status = geventhandlers[etype](event);
         free(event);
     } while (gconf.running && status == ERR_NONE);
 

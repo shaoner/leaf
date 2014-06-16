@@ -39,15 +39,6 @@
 # endif
 
 /*
- * Error status
- */
-typedef enum {
-    ERR_NONE,
-    ERR_CONN,
-    ERR_EVENT
-} leaf_error_t;
-
-/*
  * Global configuration
  */
 struct glob_config_t {

@@ -19,23 +19,15 @@
  *
  */
 
-#ifndef EVENT_H
-# define EVENT_H
+#ifndef ERROR_H
+# define ERROR_H
 
-# include "error.h"
+/*
+ * Generic error status
+ */
+typedef enum {
+    ERR_NONE,
+    ERR_CONN
+} leaf_error_t;
 
-# include <xcb/xcb.h>
-
-typedef leaf_error_t (*event_handler_t)(xcb_generic_event_t*);
-
-#define MAX_EVENTS XCB_MAPPING_NOTIFY + 1
-extern event_handler_t geventhandlers[MAX_EVENTS];
-
-# ifndef NDEBUG
-void event_print(int type);
-#  define print_event(type) event_print(type)
-# else /* NDEBUG */
-#  define print_event(type)
-# endif /* !NDEBUG */
-
-#endif /* !EVENT_H */
+#endif /* !ERROR_H */
