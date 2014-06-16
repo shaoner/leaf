@@ -28,7 +28,8 @@
 typedef enum {
     ERR_NONE,
     ERR_CONN,
-    ERR_NOMEM
+    ERR_NOMEM,
+    ERR_BADARG
 } leaf_error_t;
 
 #endif /* !ERROR_H */
