@@ -5,30 +5,30 @@
 # Parameters
 # ----------------------------------------
 
-DEBUG			?= 1
-VERBOSE			?= 0
-LDFLAGS			= -lxcb
-VERSION			= $(shell cat VERSION)
-V				= @
-CFLAGS			= -Wall -Werror -D_POSIX_C_SOURCE -std=c99 -I.
-OUT_DIR			= bin
-SRC_DIR			= src
-EXE_NAME		= leaf
-SOURCES			= leaf.c event.c window.c
+DEBUG    ?= 1
+VERBOSE  ?= 0
+LDFLAGS  = -lxcb
+VERSION  = $(shell cat VERSION)
+V        = @
+CFLAGS   = -Wall -Werror -D_POSIX_C_SOURCE -std=c99 -I.
+OUT_DIR  = bin
+SRC_DIR  = src
+EXE_NAME = leaf
+SOURCES  = leaf.c event.c window.c
 
 ifeq ($(DEBUG), 1)
-	CFLAGS		+= -g -ggdb -DVERSION="$(VERSION)-debug"
-	BIN_DIR		= $(OUT_DIR)/debug
+	CFLAGS  += -g -ggdb -DVERSION="$(VERSION)-debug"
+	BIN_DIR = $(OUT_DIR)/debug
 else
-	CFLAGS		+= -Werror -Os -DNDEBUG -DVERSION="$(VERSION)"
-	BIN_DIR		= $(OUT_DIR)/release
+	CFLAGS  += -Werror -Os -DNDEBUG -DVERSION="$(VERSION)"
+	BIN_DIR = $(OUT_DIR)/release
 endif
 
-OBJECTS			= $(SOURCES:%.c=$(BIN_DIR)/%.o)
-EXE				= $(BIN_DIR)/$(EXE_NAME)
+OBJECTS  = $(SOURCES:%.c=$(BIN_DIR)/%.o)
+EXE      = $(BIN_DIR)/$(EXE_NAME)
 
 ifeq ($(VERBOSE), 1)
-	V =
+	V       =
 endif
 
 # Functions
