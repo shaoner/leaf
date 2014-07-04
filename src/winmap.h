@@ -19,22 +19,24 @@
  *
  */
 
-#ifndef WINDOW_H
-# define WINDOW_H
+#ifndef WINMAP_H
+# define WINMAP_H
 
-# include <xcb/xcb.h>
+#include "error.h"
+#include "window.h"
 
-typedef struct _window_t {
-    xcb_window_t id;
-    uint16_t width;
-    uint16_t height;
-} window_t;
+#include <xcb/xcb.h>
 
-typedef struct _winlist {
-    window_t *win;
-    struct _winlist *next;
-} winlist_t;
+# define WIN_TABLE_SIZE (512)
 
-void window_configure(xcb_window_t id);
+typedef struct _winmap_t {
+    winlist_t **table;
+} winmap_t;
 
-#endif /* !WINDOW_H */
+leaf_error_t winmap_new(winmap_t **newmap);
+void winmap_delete(winmap_t *map);
+leaf_error_t winmap_add_window(winmap_t *map, xcb_window_t id, window_t **win);
+void winmap_rm_window(winmap_t *map, xcb_window_t id);
+window_t *winmap_get_window(winmap_t *map, xcb_window_t id);
+
+#endif /* !WINMAP_H */

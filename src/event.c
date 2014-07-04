@@ -23,31 +23,51 @@
 #include "utils.h"
 #include "window.h"
 #include "leaf.h"
+#include "winmap.h"
 
 #include <xcb/xcb.h>
 
 static leaf_error_t event_create_notify(xcb_generic_event_t *ge)
 {
-#ifndef NDEBUG
     xcb_create_notify_event_t *e = (xcb_create_notify_event_t *)ge;
+    window_t *win = NULL;
+    leaf_error_t err = ERR_NONE;
+
     print_d("New window 0x%08X (%i, %i) [%u, %u]",
             e->window, e->x, e->y, e->width, e->height);
-#endif
+
+    if ((err = winmap_add_window(gconf.wins, e->window, &win)) != ERR_NONE)
+        return err;
+
+    win->width = e->width;
+    win->height = e->height;
+
     return ERR_NONE;
 }
 
 static leaf_error_t event_destroy_notify(xcb_generic_event_t *ge)
 {
-    print_d("");
+    xcb_destroy_notify_event_t *e = (xcb_destroy_notify_event_t *)ge;
+
+    print_d("Delete window 0x%08X", e->window);
+
+    winmap_rm_window(gconf.wins, e->window);
+
     return ERR_NONE;
 }
 
 static leaf_error_t event_map_request(xcb_generic_event_t *ge)
 {
     xcb_map_request_event_t *e = (xcb_map_request_event_t *)ge;
+    window_t *win = NULL;
 
-    print_d("");
-    window_configure(e->window);
+    print_d("Request map 0x%08X", e->window);
+
+    if ((win = winmap_get_window(gconf.wins, e->window))) {
+        print_d("Configuring window [%u, %u]", win->width, win->height);
+        window_configure(win->id);
+    }
+
     return ERR_NONE;
 }
 

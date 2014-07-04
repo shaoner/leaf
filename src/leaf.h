@@ -22,11 +22,13 @@
 #ifndef CYLON_H
 # define CYLON_H
 
+# include "utils.h"
+# include "winmap.h"
+
 # include <stdlib.h>
 # include <stdbool.h>
-# include <xcb/xcb.h>
 
-# include "utils.h"
+# include <xcb/xcb.h>
 
 /*
  * Program info
@@ -46,6 +48,7 @@ struct glob_config_t {
     bool running;
     const xcb_setup_t *xsetup;
     xcb_screen_t *screen;
+    winmap_t *wins;
 };
 
 extern struct glob_config_t gconf;

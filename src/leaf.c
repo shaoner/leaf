@@ -38,7 +38,8 @@ struct glob_config_t gconf = {
     .conn = NULL,
     .running = false,
     .xsetup = NULL,
-    .screen = NULL
+    .screen = NULL,
+    .wins = NULL
 };
 
 /*
@@ -84,6 +85,7 @@ static leaf_error_t leaf_init()
     uint32_t values;
     xcb_void_cookie_t cookie;
     xcb_generic_error_t *status = NULL;
+    leaf_error_t err;
 
     gconf.running = false;
     action.sa_handler = stop_signal_handler;
@@ -131,6 +133,9 @@ static leaf_error_t leaf_init()
         return ERR_CONN;
     }
 
+    if ((err = winmap_new(&gconf.wins)) != ERR_NONE)
+        return err;
+
     return ERR_NONE;
 }
 
@@ -172,6 +177,8 @@ static int leaf_exit(int code)
     /* Close connection to X and release memory */
     if (gconf.conn)
         xcb_disconnect(gconf.conn);
+    winmap_delete(gconf.wins);
+    gconf.wins = NULL;
     if (code)
         print_e("exit with error %i", code);
     return code;

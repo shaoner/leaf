@@ -14,7 +14,7 @@ CFLAGS   = -Wall -Werror -D_POSIX_C_SOURCE -std=c99 -I.
 OUT_DIR  = bin
 SRC_DIR  = src
 EXE_NAME = leaf
-SOURCES  = leaf.c event.c window.c
+SOURCES  = leaf.c event.c window.c winmap.c
 
 ifeq ($(DEBUG), 1)
 	CFLAGS  += -g -ggdb -DVERSION="$(VERSION)-debug"
