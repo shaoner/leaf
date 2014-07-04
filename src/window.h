@@ -24,6 +24,6 @@
 
 # include <xcb/xcb.h>
 
-void window_configure(xcb_window_t window);
+void window_configure(xcb_window_t id);
 
 #endif /* !WINDOW_H */
