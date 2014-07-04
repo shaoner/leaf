@@ -24,6 +24,12 @@
 
 # include <xcb/xcb.h>
 
+typedef struct _window_t {
+    xcb_window_t id;
+    uint16_t width;
+    uint16_t height;
+} window_t;
+
 void window_configure(xcb_window_t id);
 
 #endif /* !WINDOW_H */
