@@ -33,8 +33,8 @@ static leaf_error_t event_create_notify(xcb_generic_event_t *ge)
     window_t *win = NULL;
     leaf_error_t err = ERR_NONE;
 
-    print_d("New window 0x%08X (%i, %i) [%u, %u]",
-            e->window, e->x, e->y, e->width, e->height);
+    log(DEBUG2, "New window 0x%08X (%i, %i) [%u, %u]",
+        e->window, e->x, e->y, e->width, e->height);
 
     if ((err = winmap_add_window(gconf.wins, e->window, &win)) != ERR_NONE)
         return err;
@@ -49,7 +49,7 @@ static leaf_error_t event_destroy_notify(xcb_generic_event_t *ge)
 {
     xcb_destroy_notify_event_t *e = (xcb_destroy_notify_event_t *)ge;
 
-    print_d("Delete window 0x%08X", e->window);
+    log(DEBUG2, "Delete window 0x%08X", e->window);
 
     winmap_rm_window(gconf.wins, e->window);
 
@@ -61,10 +61,11 @@ static leaf_error_t event_map_request(xcb_generic_event_t *ge)
     xcb_map_request_event_t *e = (xcb_map_request_event_t *)ge;
     window_t *win = NULL;
 
-    print_d("Request map 0x%08X", e->window);
+    log(DEBUG2, "Request map 0x%08X", e->window);
 
     if ((win = winmap_get_window(gconf.wins, e->window))) {
-        print_d("Configuring window [%u, %u]", win->width, win->height);
+        log(DEBUG3, "Configuring window [%u, %u]",
+            win->width, win->height);
         window_configure(win->id);
     }
 
@@ -73,7 +74,6 @@ static leaf_error_t event_map_request(xcb_generic_event_t *ge)
 
 static leaf_error_t event_configure_request(xcb_generic_event_t *ge)
 {
-    print_d("");
     return ERR_NONE;
 }
 
@@ -115,7 +115,7 @@ event_handler_t geventhandlers[MAX_EVENTS] = {
     NULL, /* XCB_MAPPING_NOTIFY    */
 };
 
-#ifndef NDEBUG
+#ifdef DEBUG
 static const char *eventnames[MAX_EVENTS] = {
     "",
     "",
@@ -157,6 +157,6 @@ static const char *eventnames[MAX_EVENTS] = {
 void event_print(int type)
 {
     if (type < MAX_EVENTS)
-        print_d("-> Event %i (%s)", type, eventnames[type]);
+        log(DEBUG3, "-> Event %i (%s)", type, eventnames[type]);
 }
 #endif

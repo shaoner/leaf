@@ -71,7 +71,7 @@ static void stop_signal_handler(int signal)
     switch(signal) {
     case SIGTERM:
     case SIGINT:
-        print_d("Receive signal %i, stop %s", signal, PROG_NAME);
+        log(DEBUG3, "Receive signal %i, stop %s", signal, PROG_NAME);
         gconf.running = false;
         break;
     }
@@ -87,6 +87,7 @@ static leaf_error_t leaf_init()
     xcb_generic_error_t *status = NULL;
     leaf_error_t err;
 
+    log(DEBUG1, "");
     gconf.running = false;
     action.sa_handler = stop_signal_handler;
     action.sa_flags = 0;
@@ -101,10 +102,10 @@ static leaf_error_t leaf_init()
     /* Initialize connection to the X server */
     gconf.conn = xcb_connect(NULL, &first_screen);
     if (xcb_connection_has_error(gconf.conn)) {
-        print_e("Cannot initialize connection to the X server");
+        log(ERROR, "Cannot initialize connection to the X server");
         return ERR_CONN;
     }
-    print_d("First screen = %i", first_screen);
+    log(DEBUG3, "First screen = %i", first_screen);
     /* Get back X data */
     gconf.xsetup = xcb_get_setup(gconf.conn);
     /* Find the first screen */
@@ -127,7 +128,7 @@ static leaf_error_t leaf_init()
 
     if (status)
     {
-        print_d("X is busy, another window manager may be running (%d)",
+        log(ERROR, "X is busy, another window manager may be running (%d)",
                 status->error_code);
         free(status);
         return ERR_CONN;
@@ -151,7 +152,7 @@ static leaf_error_t leaf_run()
         event = xcb_poll_for_event(gconf.conn);
         if (!event) {
             if (xcb_connection_has_error(gconf.conn)) {
-                print_e("X connection is lost, exiting");
+                log(ERROR, "X connection is lost, exiting");
                 return ERR_CONN;
             }
             continue;
@@ -159,7 +160,7 @@ static leaf_error_t leaf_run()
         etype = XCB_EVENT_RESPONSE_TYPE(event);
 
         /* Only for debug prupose */
-        print_event(etype);
+        log_event(etype);
 
         /* Execute specific event handler */
         if (etype < MAX_EVENTS && geventhandlers[etype])
@@ -172,7 +173,7 @@ static leaf_error_t leaf_run()
 
 static int leaf_exit(int code)
 {
-    print_d("");
+    log(DEBUG1, "");
     gconf.running = false;
     /* Close connection to X and release memory */
     if (gconf.conn)
@@ -180,7 +181,7 @@ static int leaf_exit(int code)
     winmap_delete(gconf.wins);
     gconf.wins = NULL;
     if (code)
-        print_e("exit with error %i", code);
+        log(ERROR, "exit with error %i", code);
     return code;
 }
 

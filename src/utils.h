@@ -24,36 +24,37 @@
 
 # include <stdio.h>
 
-/*
- * Utils
- */
+# if !defined(DEBUG) || DEBUG == 0
+#  define DEBUG_LEVEL 0
+#  undef DEBUG
+# else
+#  define DEBUG_LEVEL DEBUG
+# endif /* !DEBUG */
 
 /* Stringify a macro */
 # define __stringify(s) #s
 # define _stringify(s) __stringify(s)
 
-/* Debug macros */
-# ifdef NDEBUG
+/* Display */
+# define ERROR   (0)
+# define WARNING (0)
+# define DEBUG1  (1)
+# define DEBUG2  (2)
+# define DEBUG3  (3)
 
-#  define print_d(fmt, args...)
-#  define d_assert(c)
+# define log(level, fmt, ...)                                           \
+    do {                                                                \
+        if (level <= DEBUG_LEVEL)                                       \
+            fprintf(stderr, "[" #level " "  __FILE__ ":"                \
+                    _stringify(__LINE__) ": %s] " fmt "\n",             \
+                    __func__, ## __VA_ARGS__);                          \
+    } while (0)
 
-# else
-
+# ifdef DEBUG
 #  include <assert.h>
-
-#  define print_d(fmt, args...)                                         \
-    fprintf(stderr, "[debug " __FILE__ ":" _stringify(__LINE__) " %s] " \
-            fmt "\n", __FUNCTION__, ## args)
 #  define d_assert(c) assert(c)
-
-# endif /* !NDEBUG */
-
-/* General printing macros */
-# define print_e(fmt, args...)                      \
-    fprintf(stderr, "[error] " fmt "\n", ## args)
-
-# define print_w(fmt, args...)                      \
-    fprintf(stderr, "[warn] " fmt "\n", ## args)
+# else
+#  define d_assert(c)
+# endif /* !DEBUG */
 
 #endif /* !UTILS_H */

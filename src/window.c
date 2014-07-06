@@ -30,8 +30,6 @@ void window_configure(xcb_window_t id)
     uint32_t mask;
     uint32_t vals[1];
 
-    print_d("Configure window %d", id);
-
     /* Border color */
     mask = XCB_CW_BORDER_PIXEL;
     vals[0] = 0x666666;

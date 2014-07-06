@@ -5,7 +5,7 @@
 # Parameters
 # ----------------------------------------
 
-DEBUG    ?= 1
+DEBUG    ?= 3
 VERBOSE  ?= 0
 LDFLAGS  = -lxcb
 VERSION  = $(shell cat VERSION)
@@ -16,12 +16,12 @@ SRC_DIR  = src
 EXE_NAME = leaf
 SOURCES  = leaf.c event.c window.c winmap.c
 
-ifeq ($(DEBUG), 1)
-	CFLAGS  += -g -ggdb -DVERSION="$(VERSION)-debug"
-	BIN_DIR = $(OUT_DIR)/debug
-else
-	CFLAGS  += -Werror -Os -DNDEBUG -DVERSION="$(VERSION)"
+ifeq ($(DEBUG), 0)
+	CFLAGS  += -Werror -Os -DVERSION="$(VERSION)"
 	BIN_DIR = $(OUT_DIR)/release
+else
+	CFLAGS  += -g -ggdb -DDEBUG="$(DEBUG)" -DVERSION="$(VERSION)-debug"
+	BIN_DIR = $(OUT_DIR)/debug
 endif
 
 OBJECTS  = $(SOURCES:%.c=$(BIN_DIR)/%.o)
@@ -34,10 +34,10 @@ endif
 # Functions
 # ----------------------------------------
 
-ifeq ($(DEBUG), 1)
-	display_info = @echo -e "[\033[0;32m*\033[0;0m] $(1)"
-else
+ifeq ($(DEBUG), 0)
 	display_info = @echo -e "[\033[0;34m*\033[0;0m] $(1)"
+else
+	display_info = @echo -e "[\033[0;32m*\033[0;0m] $(1)"
 endif
 
 # Rules
@@ -48,7 +48,7 @@ all: $(EXE_NAME)
 $(EXE_NAME): _start $(EXE)
 
 _start: $(BIN_DIR)
-ifneq ($(DEBUG), 1)
+ifeq ($(DEBUG), 0)
 	$(call display_info,"--- Release mode: v$(VERSION) ---")
 endif
 
